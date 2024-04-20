@@ -9,6 +9,7 @@ use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
 use App\Filters\Cors;
+use App\Filters\FilterJwt;
 
 class Filters extends BaseConfig
 {
@@ -28,6 +29,7 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'auth'          => \App\Filters\Auth::class,
+        'autentikasi'   => FilterJWT::class,
         'contentFilter' => ContentSecurityPolicy::class,
     ];
 
@@ -72,6 +74,11 @@ class Filters extends BaseConfig
      * 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']]
      */
     public $filters = [
-        'contentFilter' => ['before' => ['response']],
+        // ...
+        'cors' => [
+            'before' => ['api/*'],
+            'after' => ['api/*']
+        ],
     ];
+    
 }

@@ -4,6 +4,8 @@ import axios from "axios";
 import { Row, Col, Form, Button, Image } from "react-bootstrap";
 import logo from "../images/logo-web.png";
 import illustrasi from "../images/illustrasi-1.png";
+import Header from "../landing/Navbar";
+import Footer from "../landing/Footer";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,7 +15,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/api/partisipan/login', {
+      const response = await axios.post('http://localhost:8080/partisipan/login', {
         email_partisipan: email,
         password_partisipan: password
       });
@@ -24,7 +26,7 @@ const Login = () => {
       localStorage.setItem('partisipan_nama', partisipan_nama);
       localStorage.setItem('partisipan_email', partisipan_email);
 
-      history.push('/dashboard');
+      history.push('/');
     } catch (error) {
       if (error.response) {
         // Kesalahan dari server (status code bukan 2xx)
@@ -42,9 +44,14 @@ const Login = () => {
       }
     }
   };
-
+  
+  
   return (
+    <>
+    <Header/>
     <Row className="d-flex justify-content-between">
+          
+
       {/* Form di sisi kiri */}
       <Col md={4} className="mx-5">
         <div className="d-flex align-items-center justify-content-center">
@@ -84,7 +91,7 @@ const Login = () => {
         </Form>
         <div className="my-3 text-center">
           <p>
-            Don't have an account? <a href="/partisipan/register">Register</a>
+            Don't have an account? <a href="/partisipan-register">Register</a>
           </p>
         </div>
       </Col>
@@ -94,6 +101,8 @@ const Login = () => {
         <Image src={illustrasi} alt="Illustrasi" fluid />
       </Col>
     </Row>
+    <Footer/>
+    </>
   );
 };
 

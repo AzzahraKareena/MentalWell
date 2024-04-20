@@ -97,14 +97,7 @@ const AdminLayout = ({ children }) => {
             >
               Admin
             </Nav.Link>
-            <Nav.Link
-              href="/profile"
-              className={`sidebar-link ${
-                location.pathname.startsWith("/profile") ? "active" : ""
-              } mt-2`}
-            >
-              Profile
-            </Nav.Link>
+            
             <Nav.Link
               href="/partisipan"
               className={`sidebar-link ${
@@ -113,6 +106,34 @@ const AdminLayout = ({ children }) => {
             >
               Partisipan
             </Nav.Link>
+
+            <Nav.Link
+              href="/kategoritest"
+              className={`sidebar-link ${
+                location.pathname.startsWith("/kategori_test") ? "active" : ""
+              } mt-2`}
+            >
+              Kategori Test
+            </Nav.Link>
+
+            <Nav.Link
+              href="/kuisioner"
+              className={`sidebar-link ${
+                location.pathname.startsWith("/kategori_test") ? "active" : ""
+              } mt-2`}
+            >
+              Kuisioner
+            </Nav.Link>
+            
+            <Nav.Link
+              href="/jawaban"
+              className={`sidebar-link ${
+                location.pathname.startsWith("/jawaban_test") ? "active" : ""
+              } mt-2`}
+            >
+              Jawaban
+            </Nav.Link>
+
             <Nav.Link
               href="/dailyinsight"
               className={`sidebar-link ${
@@ -129,25 +150,6 @@ const AdminLayout = ({ children }) => {
             >
               Psikolog
             </Nav.Link>
-
-            <Nav.Link
-              href="/kategoritest"
-              className={`sidebar-link ${
-                location.pathname.startsWith("/kategori_test") ? "active" : ""
-              } mt-2`}
-            >
-              Kategori Test
-            </Nav.Link>
-
-            <Nav.Link
-              href="/kuisioner"
-              className={`sidebar-link ${
-                location.pathname.startsWith("/kuisioner") ? "active" : ""
-              } mt-2`}
-            >
-              Kuisioner
-            </Nav.Link>
-
             {/* <Nav.Link
               href="/dailyinsight"
               className={`sidebar-link ${

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import profileImage from '../images/partisipan.jpg'; // Ubah sesuai path gambar partisipan
-import EditProfileForm from './EditProfileForm';
+import profileImage from '../images/admin.jpg'; // Ubah sesuai path gambar partisipan
+import EditProfileForm from './EditForm';
 
 const Profile = () => {
   const partisipan = {

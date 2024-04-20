@@ -27,7 +27,7 @@ const KuisionerList = () => {
       const confirmed = window.confirm("Apakah Anda yakin ingin menghapus kuisioner ini?");
   
       if (confirmed) {
-        await axios.delete(`http://localhost:8080/api/kuisioner/${id}`);
+        await axios.get(`http://localhost:8080/api/kuisioner/${id}`);
         getKuisionerList(); // Panggil kembali data setelah penghapusan berhasil
       }
     } catch (error) {
@@ -55,35 +55,36 @@ const KuisionerList = () => {
               </Link>
             </div>
             <div className="table-responsive" style={{ overflowY: "auto", maxHeight: "450px" }}>
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>ID Kuisioner</th>
-                    <th>ID Kategori Test</th>
-                    <th>Pertanyaan</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {kuisionerList.map((kuisioner, index) => (
-                    <tr key={kuisioner.id_kuesioner}>
-                      <td>{index + 1}</td>
-                      <td>{kuisioner.id_kuesioner}</td>
-                      <td>{kuisioner.id_kategori}</td>
-                      <td>{kuisioner.pertanyaan}</td>
-                      <td>
-                        <Link to={`/kuisioner/edit/${kuisioner.id_kuesioner}`} className="btn btn-primary btn-sm mr-2">
-                          <FontAwesomeIcon icon={faEdit} /> Edit
-                        </Link>
-                        <Button variant="danger" size="sm" onClick={() => deleteKuisioner(kuisioner.id_kuesioner)}>
-                          <FontAwesomeIcon icon={faTrash} /> Hapus
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+            <Table striped bordered hover>
+            <thead>
+                <tr>
+                <th>#</th>
+                <th>ID Kuisioner</th>
+                <th>ID Kategori Test</th>
+                <th>Pertanyaan</th>
+                <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {kuisionerList.map((kuisioner, index) => (
+                <tr key={kuisioner.id_kuisioner}>
+                    <td>{index + 1}</td>
+                    <td>{kuisioner.id_kuisioner}</td>
+                    <td>{kuisioner.id_kategori}</td>
+                    <td>{kuisioner.pertanyaan}</td>
+                    <td>
+                    <Link to={`/kuisioner/edit/${kuisioner.id_kuisioner}`} className="btn btn-primary btn-sm mr-2">
+                        <FontAwesomeIcon icon={faEdit} /> Edit
+                    </Link>
+                    <Button variant="danger" size="sm" onClick={() => deleteKuisioner(kuisioner.id_kuisioner)}>
+                        <FontAwesomeIcon icon={faTrash} /> Hapus
+                    </Button>
+                    </td>
+                </tr>
+                ))}
+            </tbody>
+            </Table>
+
             </div>
           </Card.Body>
         </Card>

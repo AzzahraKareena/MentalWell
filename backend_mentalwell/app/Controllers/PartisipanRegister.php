@@ -28,7 +28,7 @@ class PartisipanRegister extends BaseController
 
         $response = [
             'status' => 200,
-            'message' => 'Admin registered successfully',
+            'message' => 'Partisipan registered successfully',
             'data' => $data
         ];
 
