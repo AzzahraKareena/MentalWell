@@ -126,4 +126,16 @@ class Kuisioner extends ResourceController
 
         return $this->respond($response);
     }
+    // Method untuk mengambil pertanyaan kuisioner berdasarkan id_kategori
+    public function byKategoriId($id_kategori = null)
+    {
+        $model = new KuisionerModel();
+        $data = $model->where('id_kategori', $id_kategori)->findAll();
+
+        if (!$data) {
+            return $this->failNotFound('No Data Found');
+        }
+
+        return $this->respond($data);
+    }
 }

@@ -35,6 +35,11 @@ const PartisipanLogin = lazy(() => import("./components/Partisipan/PartisipanLog
 const PartisipanRegister = lazy(() => import("./components/Partisipan/PartisipanRegister"));
 const PartisipanProfile = lazy(() => import("./components/Partisipan/PartisipanProfile"));
 const EditPartisipan = lazy(() => import("./components/Partisipan/EditPartisipan"));
+const DASS42Cemas = lazy(() => import ("./components/mentalTest/DASS42Cemas"));
+const DASS42Depresi = lazy(() => import ("./components/mentalTest/DASS42Depresi"));
+const DASS42Stress = lazy(() => import ("./components/mentalTest/DASS42Stress"));
+const DASS42Detail = lazy(() => import ("./components/mentalTest/DASS42Detail"));
+const KategoriDASS42 = lazy(() => import ("./components/mentalTest/KategoriDass42"));
 const SRQTest = lazy(() => import("./components/mentalTest/SRQTest"));
 const SRQDetail = lazy(() => import("./components/mentalTest/SRQDetail"));
 const MentalWellTest = lazy(() => import("./components/mentalTest/MentalWellTest"));
@@ -51,6 +56,11 @@ function App() {
               <Route path="/about-us" component={AboutUs} />
               <Route path="/register" component={Register} />
               <Route exact path="/dashboard" component={Dashboard} />
+              <Route exact path="/dass42cemas-user" component={DASS42Cemas} />
+              <Route exact path="/dass42depresi-user" component={DASS42Depresi} />
+              <Route exact path="/dass42stress-user" component={DASS42Stress} />
+              <Route exact path="/dass42detail-user" component={DASS42Detail} />
+              <Route exact path="/dass42kategori-user" component={KategoriDASS42} />
               <Route exact path="/srqtest-user" component={SRQTest} />
               <Route exact path="/srqdetail-user" component={SRQDetail} />
               <Route exact path="/mentalwelltest-user" component={MentalWellTest} />

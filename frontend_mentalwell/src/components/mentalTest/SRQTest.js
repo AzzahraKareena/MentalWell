@@ -5,44 +5,56 @@ import Navbar from '../landing/Navbar';
 import Footer from '../landing/Footer';
 
 const KuisionerPage = () => {
-  const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState({});
+  const [questions] = useState([
+    "Apakah Anda sering merasa sakit kepala?",
+    "Apakah Anda kehilangan nafsu makan?",
+    "Apakah tidur Anda tidak nyenyak?",
+    "Apakah Anda mudah merasa takut?",
+    "Apakah Anda merasa cemas, tegang, atau khawatir?",
+    "Apakah tangan Anda gemetar?",
+    "Apakah Anda mengalami gangguan pencernaan?",
+    "Apakah Anda merasa sulit berpikir jernih?",
+    "Apakah Anda merasa tidak bahagia?",
+    "Apakah Anda lebih sering menangis?",
+    "Apakah Anda merasa sulit untuk menikmati aktivitas sehari-hari?",
+    "Apakah Anda merasa kesulitan untuk mengambil keputusan?",
+    "Apakah aktivitas-tugas sehari-hari Anda terbengkalai?",
+    "Apakah Anda merasa tidak mampu berperan dalam kehidupan ini?",
+    "Apakah Anda kehilangan minat terhadap banyak hal?",
+    "Apakah Anda merasa tidak berharga?",
+    "Apakah Anda mempunyai pikiran untuk mengakhiri hidup Anda?",
+    "Apakah Anda merasa lelah sepanjang waktu?",
+    "Apakah Anda merasa tidak enak di perut?",
+    "Apakah Anda mudah lelah?"
+  ]);
+
+  const [answers, setAnswers] = useState(new Array(questions.length).fill(null));
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const id_partisipan = localStorage.getItem('partisipan_id'); // Menangkap id_partisipan yang login
+  const [idPartisipan, setIdPartisipan] = useState(null);
 
   useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/kuisioner');
-        const initialAnswers = {};
-        response.data.forEach(question => {
-          initialAnswers[question.id_kuesioner] = null;
-        });
-        setQuestions(response.data);
-        setAnswers(initialAnswers);
-      } catch (error) {
-        console.error('Error fetching questions:', error);
-      }
-    };
-
-    fetchQuestions();
+    // Ambil id_partisipan dari localStorage
+    const partisipanId = localStorage.getItem('partisipan_id');
+    setIdPartisipan(partisipanId);
   }, []);
 
-  const handleAnswer = async (questionId, answer) => {
+  const handleAnswer = (index, answer) => {
+    const updatedAnswers = [...answers];
+    updatedAnswers[index] = answer;
+    setAnswers(updatedAnswers);
+  };
+
+  const handleSubmit = async () => {
     try {
       setIsSubmitting(true);
       // Lakukan pengiriman data jawaban ke backend
-      // Gunakan id_partisipan yang telah ditangkap
-      await axios.post('http://localhost:8080/api/jawaban', {
-        id_partisipan: parseInt(id_partisipan),
-        id_kuisioner: questionId,
-        jawaban: answer
+      await axios.post('http://localhost:8080/api/jawaban-srq', {
+        id_partisipan: idPartisipan, // Gunakan id_partisipan dari localStorage
+        jawaban: answers
       });
-      console.log('Jawaban berhasil dikirim:', answer);
-      // Update state answers dengan jawaban yang dipilih
-      setAnswers({ ...answers, [questionId]: answer });
+      console.log('Jawaban berhasil dikirim:', answers);
     } catch (error) {
-      console.error('Error submitting answer:', error);
+      console.error('Error submitting answers:', error);
     } finally {
       setIsSubmitting(false);
     }
@@ -50,35 +62,38 @@ const KuisionerPage = () => {
 
   return (
     <>
-      <Navbar />
-      <Container>
-        <header style={{ backgroundColor: '#FEA503', padding: '10px 0', marginBottom: '20px', color: 'white', textAlign: 'center' }}>
-          <h1>Kuisioner Kategori 1</h1>
-        </header>
-        {questions.map((question, index) => (
-          <div key={question.id_kuesioner} style={{ marginBottom: '20px' }}>
-            <p>{index + 1}. {question.pertanyaan}</p>
-            <div>
-              <Button
-                variant={answers[question.id_kuesioner] === 'YA' ? 'primary' : 'outline-primary'}
-                onClick={() => handleAnswer(question.id_kuesioner, 'YA')}
-                disabled={isSubmitting}
-                style={{ marginRight: '10px' }}
-              >
-                YA
-              </Button>
-              <Button
-                variant={answers[question.id_kuesioner] === 'TIDAK' ? 'danger' : 'outline-danger'}
-                onClick={() => handleAnswer(question.id_kuesioner, 'TIDAK')}
-                disabled={isSubmitting}
-              >
-                TIDAK
-              </Button>
-            </div>
+    <Navbar />
+    <Container>
+      <header style={{ backgroundColor: '#FEA503', padding: '10px 0', marginBottom: '20px', color: 'white', textAlign: 'center' }}>
+        <h1>Kuisioner</h1>
+      </header>
+      {questions.map((question, index) => (
+        <div key={index} style={{ marginBottom: '20px' }}>
+          <p>{index + 1}. {question}</p>
+          <div>
+            <Button
+              variant={answers[index] === 1 ? 'primary' : 'outline-primary'}
+              onClick={() => handleAnswer(index, 1)}
+              disabled={isSubmitting}
+              style={{ marginRight: '10px' }}
+            >
+              YA
+            </Button>
+            <Button
+              variant={answers[index] === 0 ? 'danger' : 'outline-danger'}
+              onClick={() => handleAnswer(index, 0)}
+              disabled={isSubmitting}
+            >
+              TIDAK
+            </Button>
           </div>
-        ))}
-      </Container>
-      <Footer />
+        </div>
+      ))}
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <Button onClick={handleSubmit} disabled={isSubmitting}>Submit</Button>
+      </div>
+    </Container>
+    <Footer />
     </>
   );
 };

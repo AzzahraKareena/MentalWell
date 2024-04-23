@@ -58,10 +58,20 @@ $routes->get('api/kuisioner/(:num)', 'Kuisioner::show/$1', ['filter' => 'cors'])
 $routes->post('api/kuisioner', 'Kuisioner::create', ['filter' => 'cors']); // Endpoint untuk menambahkan data kuisioner baru
 $routes->post('api/kuisioner/(:num)', 'Kuisioner::update/$1', ['filter' => 'cors']); // Endpoint untuk mengupdate data kuisioner berdasarkan ID
 $routes->delete('api/kuisioner/(:num)', 'Kuisioner::delete/$1', ['filter' => 'cors']); // Endpoint untuk menghapus data kuisioner berdasarkan ID
+$routes->get('api/kuisioner/kategori/(:num)', 'Kuisioner::byKategoriId/$1', ['filter' => 'cors']); // Endpoint untuk mengambil pertanyaan kuisioner berdasarkan id_kategori
 
 $routes->get('api/jawaban', 'Jawaban::index', ['filter' => 'cors']); // Endpoint untuk menampilkan semua data jawaban
 $routes->get('api/jawaban/(:num)', 'Jawaban::show/$1', ['filter' => 'cors']); // Endpoint untuk menampilkan detail jawaban berdasarkan ID
 $routes->post('api/jawaban', 'Jawaban::create', ['filter' => 'cors']); // Endpoint untuk menambahkan data jawaban baru
 $routes->post('api/jawaban/(:num)', 'Jawaban::update/$1', ['filter' => 'cors']); // Endpoint untuk mengupdate data jawaban berdasarkan ID
 $routes->delete('api/jawaban/(:num)', 'Jawaban::delete/$1', ['filter' => 'cors']); // Endpoint untuk menghapus data jawaban berdasarkan ID
+
+// $routes->group('api', ['namespace' => 'App\Controllers'], function ($routes) {
+//     $routes->post('jawaban-srq', 'JawabanSRQController::saveAnswer');
+// });
+
+$routes->post('api/jawaban-srq', 'JawabanSRQController::saveAnswer', ['filter' => 'cors']);
+$routes->get('api/jawaban-srq', 'JawabanSRQController::getAnswers');
+
+
 

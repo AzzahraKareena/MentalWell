@@ -1,27 +1,40 @@
 // AdminLayout.js
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import {
   Navbar,
   Nav,
   NavDropdown,
   Container,
   Col,
-  Row,
   Button,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faUser } from "@fortawesome/free-solid-svg-icons";
-import { useLocation } from "react-router-dom";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { useLocation, useHistory } from "react-router-dom";
 import Logo from "../images/logo.png";
 import "../style/AdminLayout.css"; // Impor file CSS
 
 const AdminLayout = ({ children }) => {
   const [sidebarVisible, setSidebarVisible] = useState(true);
   const location = useLocation();
+  const history = useHistory();
+  const [adminProfile, setAdminProfile] = useState(null);
 
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
+  };
+
+  useEffect(() => {
+    // Ambil informasi admin dari penyimpanan lokal (misalnya, localStorage)
+    const adminData = JSON.parse(localStorage.getItem("adminData"));
+    setAdminProfile(adminData);
+  }, []);
+
+  const handleLogout = () => {
+    // Hapus data admin dari penyimpanan lokal
+    localStorage.removeItem("adminData");
+    // Redirect ke halaman login admin
+    history.push("/admin/login");
   };
 
   return (
@@ -61,8 +74,8 @@ const AdminLayout = ({ children }) => {
           </Navbar.Toggle>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <NavDropdown title="Guest" class="btn btn-danger dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" >
-                <NavDropdown.Item class="dropdown-item" href="#">Logout</NavDropdown.Item>
+              <NavDropdown title={adminProfile ? adminProfile.name : "Guest"} id="basic-nav-dropdown">
+                <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
@@ -110,7 +123,7 @@ const AdminLayout = ({ children }) => {
             <Nav.Link
               href="/kategoritest"
               className={`sidebar-link ${
-                location.pathname.startsWith("/kategori_test") ? "active" : ""
+                location.pathname.startsWith("/kategoritest") ? "active" : ""
               } mt-2`}
             >
               Kategori Test
@@ -119,7 +132,7 @@ const AdminLayout = ({ children }) => {
             <Nav.Link
               href="/kuisioner"
               className={`sidebar-link ${
-                location.pathname.startsWith("/kategori_test") ? "active" : ""
+                location.pathname.startsWith("/kuisioner") ? "active" : ""
               } mt-2`}
             >
               Kuisioner
@@ -128,10 +141,19 @@ const AdminLayout = ({ children }) => {
             <Nav.Link
               href="/jawaban"
               className={`sidebar-link ${
-                location.pathname.startsWith("/jawaban_test") ? "active" : ""
+                location.pathname.startsWith("/jawaban") ? "active" : ""
               } mt-2`}
             >
               Jawaban
+            </Nav.Link>
+
+            <Nav.Link
+              href="/intervensi"
+              className={`sidebar-link ${
+                location.pathname.startsWith("/intervensi") ? "active" : ""
+              } mt-2`}
+            >
+              Intervensi
             </Nav.Link>
 
             <Nav.Link
@@ -150,38 +172,7 @@ const AdminLayout = ({ children }) => {
             >
               Psikolog
             </Nav.Link>
-            {/* <Nav.Link
-              href="/dailyinsight"
-              className={`sidebar-link ${
-                location.pathname.startsWith("/dailyinsight") ? "active" : ""
-              } mt-2`}
-            >
-              Kuisioner
-            </Nav.Link> */}
-            {/* <Nav.Link
-              href="/review"
-              className={`sidebar-link ${
-                location.pathname.startsWith("/review") ? "active" : ""
-              } mt-2`}
-            >
-              Reviews
-            </Nav.Link>
-            <Nav.Link
-              href="/chef"
-              className={`sidebar-link ${
-                location.pathname.startsWith("/chef") ? "active" : ""
-              } mt-2`}
-            >
-              Chef
-            </Nav.Link>
-            <Nav.Link
-              href="/contact"
-              className={`sidebar-link ${
-                location.pathname.startsWith("/contact") ? "active" : ""
-              } mt-2`}
-            >
-              Message
-            </Nav.Link> */}
+       
           </Nav>
         </Col>
         <Col
